@@ -1,0 +1,19 @@
+h3.gl-numbered-header {
+	display: flex;
+	align-items: center;
+	gap: .5em;
+}
+h3.gl-numbered-header span {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-family: inherit;
+	font-size: 1em;
+	color: white;
+	height: 1.4em;
+	width: 1.4em;
+	text-align: center;
+	background: #799bb7;
+	border-radius: 50%;
+	box-shadow: 0 0 10px 0 rgba(0,0,0,.2);
+}

@@ -1,0 +1,67 @@
+a.gl-bubble-button {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 20px;
+	background-color: #eee;
+	border-radius: 4px;
+	gap: 1em;
+	font-size: 1.25em;
+	font-family: inherit, sans-serif;
+	color: #799bb7;
+	position: relative;
+	isolation: isolate;
+	overflow: clip;
+	transition: color .8s ease;
+}
+a.gl-bubble-button .icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 70px;
+	height: 70px;
+	background: #799bb7;
+	border-radius: 50%;
+	position: relative;
+}
+a.gl-bubble-button .icon:before {
+	background: #799bb7;
+	content: '';
+	display: block;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	border-radius: 50%;
+	width: 1000px;
+	height: 1000px;
+	scale: 0 0;
+	translate: -50% -50%;
+	z-index: -1;
+	transform-origin: center center;
+	transition: .8s all cubic-bezier(.4,.2,.1,1);
+}
+a.gl-bubble-button .icon svg {
+	width: 35px;
+}
+a.gl-bubble-button:hover .icon:before {
+	scale: 1 1;
+	border-radius: 0;
+	transition: .8s all cubic-bezier(.4,.2,.1,1);
+}
+a.gl-bubble-button span {
+	flex-grow: 1;
+	display: flex;
+	gap: .5em;
+	font-weight: bold;
+}
+a.gl-bubble-button:hover span,
+a.gl-bubble-button:hover span:after {
+}
+a.gl-bubble-button span:after {
+	content: '\2794';	
+}
+a.gl-bubble-button:hover {
+	cursor: pointer;
+	color: #fff;
+	transition: color .8s ease;
+}
