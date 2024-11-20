@@ -3,7 +3,7 @@
  * Plugin Name: Grieve Law Plugin
  * Description: A plugin to add elementor widgets & other features to Grieve Law sites. Please don't use this.
  * Plugin URI: https://grievelaw.com/
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author: Nate Northway
  * Author URI: https://www.grievelaw.com
  * Text Domain: gl
@@ -57,11 +57,9 @@ add_action('elementor/elements/categories_registered', 'add_elementor_widget_cat
  * @since 1.0.0
  * @author Nate Northway
  * */
-function grieve_activate_au() {
-	require_once('autoupdate.php');
-	$current = '1.0.1';
-	$remote = 'https://wordpress-1360069-5045689.cloudwaysapps.com/plugin/update.php';
-	$slug = plugin_basename(__FILE__);
-	new autoupdate($current, $remote, $slug);
-}
-add_action('init', 'grieve_activate_au');
+include_once(plugin_dir_path(__FILE__) . 'autoupdate.php');
+$updater = new autoupdate(__FILE__);
+$updater->set_username('grieve-law');
+$updater->set_repository('grievelaw');
+//$updater->authorize('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');
+$updater->initialize();
