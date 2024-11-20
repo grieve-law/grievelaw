@@ -61,5 +61,4 @@ include_once(plugin_dir_path(__FILE__) . 'autoupdate.php');
 $updater = new autoupdate(__FILE__);
 $updater->set_username('grieve-law');
 $updater->set_repository('grievelaw');
-//$updater->authorize('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');
 $updater->initialize();
