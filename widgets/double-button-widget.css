@@ -1,0 +1,33 @@
+a.gl-double-button {
+	padding: 0;
+	display: block;
+	position: relative;
+	height: 75px;
+	overflow: hidden;
+	border-radius: 4px;
+}
+a.gl-double-button span {
+	display: flex;
+	align-items: center;
+	height: 75px;
+	position: relative;
+	transition: all .3s ease;
+	justify-content: center;
+	padding: 1em 2em;
+}
+a.gl-double-button .first-text {
+	margin-top: 0;
+}
+a.gl-double-button:hover .first-text {
+	margin-top: -75px;
+}
+a.gl-double-button.bottom .first-text,
+a.gl-double-button.bottom:hover .first-text {
+	margin-top: 0;
+}
+a.gl-double-button.bottom .second-text {
+	margin-top: -75px;
+}
+a.gl-double-button.bottom:hover .second-text {
+	margin-top: 0;
+}
