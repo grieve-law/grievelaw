@@ -3,7 +3,7 @@
  * Plugin Name: Grieve Law Plugin
  * Description: A plugin to add elementor widgets & other features to Grieve Law sites. Please don't use this.
  * Plugin URI: https://grievelaw.com/
- * Version: 1.0.4
+ * Version: 1.0.5
  * Author: Nate Northway
  * Author URI: https://www.grievelaw.com
  * Text Domain: gl
@@ -36,6 +36,16 @@ function register_widgets($mgr) {
 	require_once(__DIR__ . '/widgets/double-button-widget.php');
 	$mgr->register(new \Elementor_Double_Button_Widget());
 	wp_register_style('doubleButtonWidgetStyle', plugin_dir_url(__FILE__) . '/widgets/double-button-widget.css');
+
+	/**
+	 * Add Audio Player Widget
+	 * @since 1.0.5
+	 * @author Nate Northway
+	 * */
+	require_once(__DIR__ . '/widgets/audio-player-widget.php');
+	$mgr->register(new \Elementor_Audio_Player_Widget());
+	wp_register_style('audioPlayerWidgetStyle', plugin_dir_url(__FILE__) . '/widgets/audio-player-widget.css');
+	wp_register_script('audioPlayerWidgetScript', plugin_dir_url(__FILE__) . '/widgets/audio-player-widget.js');
 }
 add_action('elementor/widgets/register', 'register_widgets');
 
