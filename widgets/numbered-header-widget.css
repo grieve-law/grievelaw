@@ -12,6 +12,7 @@ h3.gl-numbered-header span {
 	color: white;
 	height: 1.4em;
 	width: 1.4em;
+	flex: 0 0 1.4em;
 	text-align: center;
 	background: #799bb7;
 	border-radius: 50%;
