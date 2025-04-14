@@ -29,6 +29,30 @@ class Elementor_Double_Button_Widget extends \Elementor\Widget_Base {
 				'tab' => \Elementor\Controls_Manager::TAB_CONTENT
 			]
 		);
+
+		/**
+		 * @since 4/14/25
+		 * @author Nate Northway
+		 * for v1.2: adding icon & offset
+		 * until line 55
+		 * */
+		$this->add_control(
+			'first_icon',
+			[
+				'label' => esc_html__('Initial Icon', 'gl'),
+				'type' => \Elementor\Controls_Manager::ICONS
+			]
+		);
+		$this->add_control(
+			'first_icon_offset',
+			[
+				'label' => esc_html__('Initial Icon Offset', 'gl'),
+				'type' => \Elementor\Controls_Manager::NUMBER,
+				'selectors' => [
+					'{{WRAPPER}} a.gl-double-button .first-text .icon-wrapper svg' => 'margin-top: {{VALUE}}px'
+				]
+			]
+		);
 		$this->add_control(
 			'first_text',
 			[
@@ -46,13 +70,20 @@ class Elementor_Double_Button_Widget extends \Elementor\Widget_Base {
 				]
 			]
 		);
+		/**
+		 * @since 4/14/25
+		 * @author Nate Northway
+		 * for v1.2: adding icon selector to selectors arr
+		 * line 85, 86
+		 * */
 		$this->add_control(
 			'first_text_color',
 			[
 				'label' => esc_html__('Initial Text Color', 'gl'),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} a.gl-double-button .first-text' => 'color: {{VALUE}}'
+					'{{WRAPPER}} a.gl-double-button .first-text' => 'color: {{VALUE}}',
+					'{{WRAPPER}} a.gl-double-button .first-text .icon-wrapper svg' => 'fill: {{VALUE}}'
 				]
 			]
 		);
@@ -69,6 +100,33 @@ class Elementor_Double_Button_Widget extends \Elementor\Widget_Base {
 			[
 				'label' => esc_html__('Secondary Content', 'gl'),
 				'tab' => \Elementor\Controls_Manager::TAB_CONTENT
+			]
+		);
+		/**
+		 * @since 4/14/25
+		 * @author Nate Northway
+		 * for v1.2: adding icon
+		 * until line 131
+		 * */
+		$this->add_control(
+			'second_icon',
+			[
+				'label' => esc_html__('Secondary Icon', 'gl'),
+				'type' => \Elementor\Controls_Manager::ICONS, 
+				'default' => [
+					'value' => 'fas fa-circle',
+					'library' => 'fa-solid'
+				]
+			]
+		);
+		$this->add_control(
+			'second_icon_offset',
+			[
+				'label' => esc_html__('Secondary Icon Offset', 'gl'),
+				'type' => \Elementor\Controls_Manager::NUMBER,
+				'selectors' => [
+					'{{WRAPPER}} a.gl-double-button .second-text .icon-wrapper svg' => 'margin-top: {{VALUE}}px'
+				]
 			]
 		);
 		$this->add_control(
@@ -88,13 +146,20 @@ class Elementor_Double_Button_Widget extends \Elementor\Widget_Base {
 				]
 			]
 		);
+		/**
+		 * @since 4/14/25
+		 * @author Nate Northway
+		 * for v1.2: adding icon selector to selectors arr
+		 * lines 161:162
+		 * */
 		$this->add_control(
 			'second_text_color',
 			[
 				'label' => esc_html__('Hidden Text Color', 'gl'),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} a.gl-double-button .second-text' => 'color: {{VALUE}}'
+					'{{WRAPPER}} a.gl-double-button .second-text' => 'color: {{VALUE}}',
+					'{{WRAPPER}} a.gl-double-button .second-text .icon-wrapper svg' => 'fill: {{VALUE}}'
 				]
 			]
 		);
@@ -134,21 +199,72 @@ class Elementor_Double_Button_Widget extends \Elementor\Widget_Base {
 				]
 			]
 		);
+		/**
+		 * @since 4/14/25
+		 * @author Nate Northway
+		 * for v1.2: init of border radius props
+		 * until line 226
+		 * */
+		$this->add_control(
+			'border_radius',
+			[
+				'label' => esc_html__('Border Radius', 'gl'),
+				'type' => \Elementor\Controls_Manager::DIMENSIONS,
+				'size_units' => ['px', '%', 'em', 'rem', 'custom'],
+				'default' => [
+					'top' => 4,
+					'right' => 4, 
+					'bottom' => 4,
+					'left' => 4,
+					'unit' => 'px',
+					'isLinked' => true,
+				],
+				'selectors' => [
+					'{{WRAPPER}} a.gl-double-button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}'
+				]
+			]
+		);
 		$this->end_controls_section();
 
 	}
 
+	/**
+	 * @since 4/14/25
+	 * @author Nate Northway
+	 * for v1.2: reconfiguring the way text is displayed to add in the conditional rendering of elements.
+	 * lines 237:271
+	 * */
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 		$class = $settings['up_or_down'];
 		?>
 		<a class='gl-double-button<?php if ($class === "bottom"):echo " bottom"; endif; ?>' href='<?php echo $settings['link']['url']; ?>'>
 			<?php if ($class === "bottom") : ?>
-				<span class='second-text'><?= $settings['second_text']; ?></span>
-				<span class='first-text'><?= $settings['first_text']; ?></span>
+				<span class='second-text'>
+					<?php if (isset($settings['second_icon'])) : ?>
+						<div class='icon-wrapper'><?php \Elementor\Icons_Manager::render_icon($settings['second_icon'], ['aria-hidden' => 'true']); ?></div>
+					<?php endif; ?>
+					<?= $settings['second_text']; ?>
+				</span>
+				<span class='first-text'>
+					<?php if (isset($settings['first_icon'])) : ?>
+						<div class='icon-wrapper'><?php \Elementor\Icons_Manager::render_icon($settings['first_icon'], ['aria-hidden' => 'true']); ?></div>
+					<?php endif; ?>
+					<?= $settings['first_text']; ?>
+				</span>
 			<?php else : ?>
-				<span class='first-text'><?= $settings['first_text']; ?></span>
-				<span class='second-text'><?= $settings['second_text']; ?></span>
+				<span class='first-text'>
+					<?php if (isset($settings['first_icon'])) : ?>
+						<div class='icon-wrapper'><?php \Elementor\Icons_Manager::render_icon($settings['first_icon'], ['aria-hidden' => 'true']); ?></div>
+					<?php endif; ?>
+					<?= $settings['first_text']; ?>
+				</span>
+				<span class='second-text'>
+					<?php if (isset($settings['second_icon'])) : ?>
+						<div class='icon-wrapper'><?php \Elementor\Icons_Manager::render_icon($settings['second_icon'], ['aria-hidden' => 'true']); ?></div>
+					<?php endif; ?>
+					<?= $settings['second_text']; ?>
+				</span>
 			<?php endif; ?>
 		</a>
 		<?php 

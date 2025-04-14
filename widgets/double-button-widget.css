@@ -6,6 +6,11 @@ a.gl-double-button {
 	overflow: hidden;
 	border-radius: 4px;
 }
+/**
+ * @since 4/14/25
+ * @author Nate Northway
+ * Adding gap property at :22
+ **/
 a.gl-double-button span {
 	display: flex;
 	align-items: center;
@@ -14,7 +19,17 @@ a.gl-double-button span {
 	transition: all .3s ease;
 	justify-content: center;
 	padding: 1em 2em;
+	gap: .25em;
 }
+/**
+ * @since 4/14/25
+ * @author Nate Northway
+ * Init of svg rule at 29:31
+ * */
+a.gl-double-button span .icon-wrapper svg {
+	height: 1em;
+}
+
 a.gl-double-button .first-text {
 	margin-top: 0;
 }

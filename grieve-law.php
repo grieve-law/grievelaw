@@ -3,7 +3,7 @@
  * Plugin Name: Grieve Law Plugin
  * Description: A plugin to add elementor widgets & other features to Grieve Law sites. Please don't use this.
  * Plugin URI: https://grievelaw.com/
- * Version: 1.0.5
+ * Version: 1.2
  * Author: Nate Northway
  * Author URI: https://www.grievelaw.com
  * Text Domain: gl
