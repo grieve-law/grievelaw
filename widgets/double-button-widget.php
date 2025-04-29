@@ -106,17 +106,15 @@ class Elementor_Double_Button_Widget extends \Elementor\Widget_Base {
 		 * @since 4/14/25
 		 * @author Nate Northway
 		 * for v1.2: adding icon
-		 * until line 131
+		 * until line 129
+		 * 
+		 * for v1.2.1: removing icon default
 		 * */
 		$this->add_control(
 			'second_icon',
 			[
 				'label' => esc_html__('Secondary Icon', 'gl'),
-				'type' => \Elementor\Controls_Manager::ICONS, 
-				'default' => [
-					'value' => 'fas fa-circle',
-					'library' => 'fa-solid'
-				]
+				'type' => \Elementor\Controls_Manager::ICONS
 			]
 		);
 		$this->add_control(
