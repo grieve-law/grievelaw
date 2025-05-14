@@ -1,3 +1,11 @@
+/**
+ * @author Nate Northway
+ * @since 1.3.0
+ * - Removing strict colors & background colors in favor of variables set in slide-up-widget.php
+ * - Refactoring background image, overlay, and stacking order to account for variable setting & correct z-index stacking
+ * - Adding subheading rules
+ * */
+
 .gl-slideup {
 	display: flex;
 	flex-direction: column;
@@ -9,36 +17,51 @@
 	text-decoration: none;
 	color: white;
 	overflow: clip;
-	background: rgba(39,48,56,.8);
 	isolation: isolate;
 	position: relative;
+	background-image: var(--background-image);
+	background-size: var(--background-size);
+	background-repeat: var(--background-repeat);
+	background-position: var(--background-position);
+}
+.gl-slideup:before {
+	content: '';
+	display: block;
+	width: 100%;
+	height: 100%;
+	background-color: var(--background-color);
+	position: absolute;
+	z-index: 0;
 }
 .gl-slideup:after {
 	content: '';
 	display: block;
 	position: absolute;
-	background-color: #799bb7;
+	background-color: var(--overlay-color);
 	width: 100%;
 	height: 100%;
 	translate: 0 calc(100% - 1em);
 	transition: translate .3s ease;
 	top: 0;
 	left: 0;
-	z-index: -1;
+	z-index: 1;
+	border-radius: 6px;
 }
 .gl-slideup .inner {
 	translate: 0 20px;
 	transition: translate .3s ease;
+	z-index: 2;
 }
 .gl-slideup .inner .title {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	color: var(--text-color);
 }
 .gl-slideup .inner .title .icon {
 	width: 70px;
 	height: 70px;
-	background: #799bb7;
+	background: var(--accent-color);
 	border-radius: 50%;
 	display: flex;
 	flex-direction: column;
@@ -48,14 +71,20 @@
 }
 .gl-slideup .inner .title .icon svg {
 	width: 45px;
+	fill: var(--text-color);
+}
+.gl-slideup .inner .title .subheading {
+	background-color: var(--accent-color);
+	color: var(--subheading-text-color);
+	padding: .5em;
 }
 .gl-slideup .inner .content {
 	opacity: 0;
 	transition: opacity 1s ease;
 }
-
 .gl-slideup .inner .content span.link_text {
 	display: block;
+	color: var(--text-color);
 }
 .gl-slideup:hover {
 	color: white;
@@ -69,7 +98,7 @@
 	transition: translate .3s ease;
 }
 .gl-slideup:hover .inner .title .icon {
-	background: #547087;
+	background: var(--accent-color);
 	transition: background .3s ease;
 }
 .gl-slideup:hover .inner .content {

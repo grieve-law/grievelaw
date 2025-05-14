@@ -7,6 +7,17 @@ if (!defined('ABSPATH')) {
  * This widget has an element that slides up to meet a header
  * @since 1.0.0
  * @author Nate Northway
+ * 
+ * @since 1.3.0
+ * @author Nate Northway
+ * - Added background overlay option (for background of hidden text when shown)
+ * - Added background image option
+ * - Added subheading option
+ * - Added subheading text color option
+ * - Added accent color options 
+ * - Changed all selectors to set variables rather than properties (makes CSS cleaner)
+ * - Changed render() to include subheading
+ * - Changed render() to only render icon container when icon is set
  * */
 class Elementor_Slide_Up_Widget extends \Elementor\Widget_Base {
 	public function get_name() { return 'Slide Up';}
@@ -42,6 +53,13 @@ class Elementor_Slide_Up_Widget extends \Elementor\Widget_Base {
 			'heading',
 			[
 				'label' => esc_html__('Heading', 'gl'),
+				'type' => \Elementor\Controls_Manager::TEXT
+			]
+		);
+		$this->add_control(
+			'subheading',
+			[
+				'label' => esc_html__('Subheading', 'gl'),
 				'type' => \Elementor\Controls_Manager::TEXT
 			]
 		);
@@ -83,9 +101,25 @@ class Elementor_Slide_Up_Widget extends \Elementor\Widget_Base {
 				'label' => esc_html__('Background Color', 'gl'),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .gl-slideup' => 'background: {{VALUE}}',
-					'{{WRAPPER}} .gl-slideup:hover .icon' => 'background: {{VALUE}}'
+					'{{WRAPPER}} .gl-slideup' => '--background-color: {{VALUE}}',
 				],
+			]
+		);
+		$this->add_group_control(
+			\Elementor\Group_Control_Background::get_type(),
+			[
+				'name' => esc_html__('Background', 'gl'),
+				'types' => ['image']
+			]
+		);
+		$this->add_control(
+			'overlay_color',
+			[
+				'label' => esc_html__('Background Overlay Color', 'gl'),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .gl-slideup' => '--overlay-color: {{VALUE}}'
+				]
 			]
 		);
 		$this->add_control(
@@ -94,8 +128,17 @@ class Elementor_Slide_Up_Widget extends \Elementor\Widget_Base {
 				'label' => esc_html__('Accent Color', 'gl'),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .gl-slideup .icon' => 'background: {{VALUE}}',
-					'{{WRAPPER}} .gl-slideup:hover::after' => 'background: {{VALUE}}'
+					'{{WRAPPER}} .gl-slideup' => '--accent-color: {{VALUE}}'
+				]
+			]
+		);
+		$this->add_control(
+			'subheading_text_color',
+			[
+				'label' => esc_html__('Subheading Text Color', 'gl'),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .gl-slidup'=> '--subheading-text-color: {{VALUE}}'
 				]
 			]
 		);
@@ -105,11 +148,7 @@ class Elementor_Slide_Up_Widget extends \Elementor\Widget_Base {
 				'label' => esc_html__('Text Color', 'gl'),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .gl-slideup .icon' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .gl-slideup .icon svg' => 'fill: {{VALUE}}',
-					'{{WRAPPER}} .gl-slideup h3' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .gl-slideup p' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .gl-slideup a' => 'color: {{VALUE}}'
+					'{{WRAPPER}} .gl-slideup' => '--text-color: {{VALUE}}'
 				]
 			]
 		);
@@ -119,13 +158,21 @@ class Elementor_Slide_Up_Widget extends \Elementor\Widget_Base {
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 		?>
-		<a class='gl-slideup' href='<?= $settings['link']['url']; ?>'>
+		<a class='gl-slideup' href='<?= $settings['link']['url']; ?>' style='
+			--background-image: url(<?php echo $settings['Background_image']['url']; ?>); 
+			--background-position: <?php echo $settings['Background_position']; ?>;
+			--background-repeat: <?php echo $settings['Background_repeat']; ?>;
+			--background-size: <?php echo $settings['Background_size']; ?>;
+			'>
 			<div class='inner'>
 				<div class='title'>
-					<div class='icon'>
-						<?php \Elementor\Icons_Manager::render_icon($settings['icon'], ['aria-hidden' => 'true']); ?>
-					</div>
+					<?php if ($settings['icon']['value'] != "" && $settings['icon']['value'] != null) : ?>
+						<div class='icon'>
+							<?php \Elementor\Icons_Manager::render_icon($settings['icon'], ['aria-hidden' => 'true']); ?>
+						</div>
+					<?php endif; ?>
 					<h3><?php echo $settings['heading']; ?></h3>
+					<span class='subheading'><?php echo $settings['subheading']; ?></span>
 				</div>
 				<div class='content'>
 					<p><?php echo $settings['description']; ?></p>
